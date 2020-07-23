@@ -1,5 +1,7 @@
 package com.sembozdemir.mindvalley.ui.channels
 
+import com.sembozdemir.mindvalley.ui.channels.repository.ChannelsRepository
+import com.sembozdemir.mindvalley.ui.channels.repository.ChannelsRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

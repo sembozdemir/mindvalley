@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextStyle.13">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="TextStyle.16">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextStyle.17">
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="TextStyle.18">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextStyle.20">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="TextStyle.24">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="TextStyle.34">
+        <item name="android:textSize">34sp</item>
+    </style>
+
+    <style name="TextStyle.45">
+        <item name="android:textSize">45sp</item>
+    </style>
+
+    <style name="TextStyle.56">
+        <item name="android:textSize">56sp</item>
+    </style>
+
+    <!-- bold styles -->
+    <style name="TextStyle.13.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.16.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.17.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.18.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.20.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.24.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.34.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.45.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle.56.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
