@@ -13,5 +13,8 @@
     <dimen name="space_tiny">2dp</dimen>
     <dimen name="media_image_width">150dp</dimen>
     <dimen name="media_image_height">230dp</dimen>
+    <dimen name="series_image_width">300dp</dimen>
+    <dimen name="series_image_height">172dp</dimen>
+    <dimen name="channel_icon_size">50dp</dimen>
 
 </resources>

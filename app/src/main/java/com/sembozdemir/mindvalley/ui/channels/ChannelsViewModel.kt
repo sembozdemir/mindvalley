@@ -23,9 +23,13 @@ class ChannelsViewModel @ViewModelInject constructor(
     fun fetchData() {
         viewModelScope.launch(Dispatchers.IO) {
             try {
+                val displayableItems = mutableListOf<DisplayableItem>()
                 val newEpisodes = channelsRepository.getNewEpisodes()
+                displayableItems.add(newEpisodes)
+                val channelUIModels = channelsRepository.getChannels()
+                displayableItems.addAll(channelUIModels)
                 withContext(Dispatchers.Main) {
-                    _displayableItems.postValue(listOf(newEpisodes))
+                    _displayableItems.postValue(displayableItems)
                 }
             } catch (e: Exception) {
                 // todo: handle exception

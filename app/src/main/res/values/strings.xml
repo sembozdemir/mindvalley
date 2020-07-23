@@ -1,4 +1,7 @@
 <resources>
     <string name="channels_title">Channels</string>
     <string name="new_episodes_title">New Episodes</string>
+    <!-- todo: use plurals -->
+    <string name="channel_subtitle_episodes">%1$d episodes</string>
+    <string name="channel_subtitle_series">%1$d series</string>
 </resources>

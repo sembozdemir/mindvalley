@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imageViewChannelIcon"
+        android:layout_width="@dimen/channel_icon_size"
+        android:layout_height="@dimen/channel_icon_size"
+        android:layout_marginStart="@dimen/space_default"
+        android:layout_marginTop="@dimen/space_default"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:id="@+id/textViewChannelTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_default"
+        android:layout_marginTop="@dimen/space_tiny"
+        android:textAppearance="@style/TextStyle.20.Bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewChannelIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageViewChannelIcon"
+        tools:text="Mindvalley Films" />
+
+    <TextView
+        android:id="@+id/textViewChannelSubtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_default"
+        android:textAppearance="@style/TextStyle.16.Bold"
+        android:textColor="@color/gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewChannelIcon"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChannelTitle"
+        tools:text="2 episodes" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewChannel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/space_default"
+        android:paddingEnd="@dimen/space_default"
+        android:layout_marginTop="@dimen/space_default"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewChannelIcon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
