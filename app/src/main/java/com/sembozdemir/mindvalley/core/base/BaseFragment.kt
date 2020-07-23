@@ -1,11 +1,12 @@
 package com.sembozdemir.mindvalley.core.base
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel> : Fragment() {
@@ -22,22 +23,22 @@ abstract class BaseFragment<B : ViewBinding, VM : BaseViewModel> : Fragment() {
 
     abstract fun onCreateViewModel(): VM
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModel = onCreateViewModel()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = onCreateViewBinding(inflater, container)
+        viewModel = onCreateViewModel()
         return binding.root
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    protected inline fun <reified T : ViewModel> viewModelOf(): T {
+        return ViewModelProvider(this).get(T::class.java)
     }
 }

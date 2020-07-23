@@ -13,7 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
 
-private const val API_BASE_URL = "https://pastebin.com/raw"
+private const val API_BASE_URL = "https://pastebin.com/raw/"
 
 @Module
 @InstallIn(ApplicationComponent::class)
@@ -46,6 +46,5 @@ object NetworkModule {
         .build()
 
     @Provides
-    @Singleton
     fun provideMindvalleyApi(retrofit: Retrofit): MindvalleyApi = retrofit.create()
 }
