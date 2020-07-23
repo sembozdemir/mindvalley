@@ -4,6 +4,12 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
+// BuildConfig values
+def _string = "string"
+
+// BuildConfig fields and resValues
+def APP_NAME = "app_name"
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -16,11 +22,51 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        vectorDrawables.useSupportLibrary = true
+
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+
+        release {
+            keyAlias 'android'
+            keyPassword 'android'
+            storeFile file('release.keystore')
+            storePassword 'android'
+        }
+    }
+
+    flavorDimensions "default"
+
+    productFlavors {
+
+        dev {
+            dimension "default"
+            applicationIdSuffix '.dev'
+            resValue _string, APP_NAME, "Mindvalley Dev"
+
+        }
+
+        prod {
+            dimension "default"
+            resValue _string, APP_NAME, "Mindvalley"
+        }
     }
 
     buildTypes {
+
+        debug {
+            signingConfig signingConfigs.debug
+            zipAlignEnabled true
+        }
+
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
