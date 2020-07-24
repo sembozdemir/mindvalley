@@ -84,6 +84,7 @@ class AdapterDelegateFactoryImpl @Inject constructor() : AdapterDelegateFactory 
             }
         ) {
             bind {
+                binding.linearLayout.removeAllViews()
                 for (i in 0 until item.categories.size - 1 step 2) {
                     val categoryView = LayoutInflater.from(context).inflate(
                         R.layout.item_category_view,

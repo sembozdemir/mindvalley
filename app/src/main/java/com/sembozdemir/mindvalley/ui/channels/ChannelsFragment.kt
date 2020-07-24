@@ -42,11 +42,18 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupSwipeRefreshLayout()
         setupRecyclerView()
 
         observeDisplayableItems()
 
         viewModel.fetchData()
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.fetchData()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -62,6 +69,7 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
         viewModel.displayableItems.observe(viewLifecycleOwner, Observer {
             listAdapter.items = it
             listAdapter.notifyDataSetChanged() // todo: use DiffUtils
+            binding.swipeRefreshLayout.isRefreshing = false
         })
     }
 
