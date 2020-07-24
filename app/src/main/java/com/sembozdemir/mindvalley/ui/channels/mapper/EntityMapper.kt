@@ -27,7 +27,7 @@ class EntityMapper @Inject constructor() {
             }
             ChannelEntity(
                 mediaObjects = mapMedia(mediaItems),
-                iconImageUrl = mapIconImageUrl(channel.iconAsset),
+                iconImageUrl = mapIconImageUrl(channel.iconAsset, channel.coverAsset),
                 title = channel.title.orEmpty(),
                 count = channel.mediaCount.orZero(),
                 isSeries = !channel.series.isNullOrEmpty()
@@ -36,17 +36,28 @@ class EntityMapper @Inject constructor() {
     }
 
     private fun mapMedia(mediaItems: List<MediaItem>): List<MediaObject> {
-        return mediaItems.map {
-            MediaObject(
-                imageUrl = it.coverAsset?.url.orEmpty(),
-                mediaTitle = it.title.orEmpty(),
-                subtitle = it.channel?.title.orEmpty()
+        val mediaObjects = mutableListOf<MediaObject>()
+        for (i in 0 until minOf(mediaItems.size, 6)) {
+            // only first 6 media items should be shown
+            val mediaItem = mediaItems[i]
+            mediaObjects.add(
+                MediaObject(
+                    imageUrl = mediaItem.coverAsset?.url.orEmpty(),
+                    mediaTitle = mediaItem.title.orEmpty(),
+                    subtitle = mediaItem.channel?.title.orEmpty()
+                )
             )
         }
+        return mediaObjects
     }
 
-    private fun mapIconImageUrl(iconAsset: Asset?): String {
-        if (iconAsset == null) return ""
+    private fun mapIconImageUrl(
+        iconAsset: Asset?,
+        coverAsset: Asset?
+    ): String {
+        if (iconAsset == null) {
+            return coverAsset?.url.orEmpty()
+        }
 
         if (!iconAsset.thumbnailUrl.isNullOrEmpty()) {
             return iconAsset.thumbnailUrl
