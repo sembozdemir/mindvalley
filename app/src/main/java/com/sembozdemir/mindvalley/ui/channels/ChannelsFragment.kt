@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.sembozdemir.mindvalley.R
@@ -46,8 +47,22 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
         setupRecyclerView()
 
         observeDisplayableItems()
+        observeShowLoadingEvent()
 
         viewModel.fetchData()
+    }
+
+    private fun observeShowLoadingEvent() {
+        viewModel.showLoading.observe(viewLifecycleOwner, Observer { show ->
+            if (show) {
+                binding.shimmerFrameLayout.isVisible = true
+                binding.recyclerView.isVisible = false
+            } else {
+                binding.shimmerFrameLayout.isVisible = false
+                binding.recyclerView.isVisible = true
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
+        })
     }
 
     private fun setupSwipeRefreshLayout() {
@@ -62,6 +77,7 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
             binding.recyclerView.addItemDecoration(dividerItemDecoration)
         }
         binding.recyclerView.adapter = listAdapter
+
     }
 
     private fun observeDisplayableItems() {

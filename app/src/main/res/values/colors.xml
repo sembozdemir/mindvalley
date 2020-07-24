@@ -9,4 +9,5 @@
     <color name="bright_gray">#3C434E</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="shimmer_light_transparent">#16FFFFFF</color>
 </resources>

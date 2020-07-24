@@ -11,10 +11,18 @@
     <dimen name="space_medium">8dp</dimen>
     <dimen name="space_small">4dp</dimen>
     <dimen name="space_tiny">2dp</dimen>
+
     <dimen name="media_image_width">150dp</dimen>
     <dimen name="media_image_height">230dp</dimen>
     <dimen name="series_image_width">300dp</dimen>
     <dimen name="series_image_height">172dp</dimen>
     <dimen name="channel_icon_size">50dp</dimen>
+    <dimen name="shimmer_header_width">130dp</dimen>
+    <dimen name="shimmer_header_height">30dp</dimen>
+    <dimen name="shimmer_title_width">100dp</dimen>
+    <dimen name="shimmer_title_height">18dp</dimen>
+    <dimen name="shimmer_subtitle_width">80dp</dimen>
+    <dimen name="shimmer_subtitle_height">16dp</dimen>
+    <dimen name="shimmer_series_title_width">150dp</dimen>
 
 </resources>
