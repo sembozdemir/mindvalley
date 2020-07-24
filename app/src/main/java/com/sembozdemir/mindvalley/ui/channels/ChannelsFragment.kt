@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.sembozdemir.mindvalley.R
@@ -15,6 +14,7 @@ import com.sembozdemir.mindvalley.core.extensions.setImageUrl
 import com.sembozdemir.mindvalley.core.extensions.setTextIfExists
 import com.sembozdemir.mindvalley.core.glide.Transformations
 import com.sembozdemir.mindvalley.core.recyclerview.HorizontalSpacingItemDecoration
+import com.sembozdemir.mindvalley.core.recyclerview.VerticalDividerItemDecoration
 import com.sembozdemir.mindvalley.databinding.*
 import com.sembozdemir.mindvalley.ui.channels.model.ChannelUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.DisplayableItem
@@ -52,12 +52,10 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
     }
 
     private fun setupRecyclerView() {
-        // fixme: fix vertical divider
-        val dividerItemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
         ContextCompat.getDrawable(requireContext(), R.drawable.list_divider)?.let {
-            dividerItemDecoration.setDrawable(it)
+            val dividerItemDecoration = VerticalDividerItemDecoration(it)
+            binding.recyclerView.addItemDecoration(dividerItemDecoration)
         }
-        binding.recyclerView.addItemDecoration(dividerItemDecoration)
         binding.recyclerView.adapter = listAdapter
     }
 
