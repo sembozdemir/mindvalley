@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.sembozdemir.mindvalley.core.base.BaseViewModel
+import com.sembozdemir.mindvalley.core.livedata.SingleLiveEvent
 import com.sembozdemir.mindvalley.ui.channels.model.DisplayableItem
 import com.sembozdemir.mindvalley.ui.channels.repository.ChannelsRepository
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,10 @@ class ChannelsViewModel @ViewModelInject constructor(
     val showLoading: LiveData<Boolean>
         get() = _showLoading
 
+    private val _errorEvent: SingleLiveEvent<Unit> = SingleLiveEvent()
+    val errorEvent: LiveData<Unit>
+        get() = _errorEvent
+
     fun fetchData() {
         _showLoading.postValue(true)
         viewModelScope.launch(Dispatchers.IO) {
@@ -37,6 +42,7 @@ class ChannelsViewModel @ViewModelInject constructor(
                 Timber.e(e)
                 withContext(Dispatchers.Main) {
                     _showLoading.postValue(false)
+                    _errorEvent.call()
                 }
             }
         }

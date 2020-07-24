@@ -5,4 +5,6 @@
     <string name="channel_subtitle_episodes">%1$d episodes</string>
     <string name="channel_subtitle_series">%1$d series</string>
     <string name="categories_title">Browse by categories</string>
+    <string name="general_error">Oops! Something went wrong. Please, try again later.</string>
+    <string name="retry">Retry</string>
 </resources>

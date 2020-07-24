@@ -1,5 +1,6 @@
 package com.sembozdemir.mindvalley.ui.channels
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +8,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.sembozdemir.mindvalley.R
 import com.sembozdemir.mindvalley.core.base.BaseFragment
+import com.sembozdemir.mindvalley.core.extensions.action
+import com.sembozdemir.mindvalley.core.extensions.snack
 import com.sembozdemir.mindvalley.core.recyclerview.VerticalDividerItemDecoration
 import com.sembozdemir.mindvalley.databinding.FragmentChannelsBinding
 import com.sembozdemir.mindvalley.ui.channels.adapter.AdapterDelegateFactory
@@ -48,8 +52,21 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
 
         observeDisplayableItems()
         observeShowLoadingEvent()
+        observeErrorEvent()
 
         viewModel.fetchData()
+    }
+
+    private fun observeErrorEvent() {
+        viewModel.errorEvent.observe(viewLifecycleOwner, Observer {
+            binding.coordinatorLayout.snack(R.string.general_error, Snackbar.LENGTH_INDEFINITE) {
+                setTextColor(Color.WHITE)
+                setBackgroundTint(Color.RED)
+                action(R.string.retry, Color.WHITE) {
+                    viewModel.fetchData()
+                }
+            }
+        })
     }
 
     private fun observeShowLoadingEvent() {
