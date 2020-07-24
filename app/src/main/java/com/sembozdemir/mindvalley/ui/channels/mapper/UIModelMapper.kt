@@ -1,7 +1,9 @@
 package com.sembozdemir.mindvalley.ui.channels.mapper
 
-import com.sembozdemir.mindvalley.core.extensions.orZero
-import com.sembozdemir.mindvalley.core.network.model.*
+import com.sembozdemir.mindvalley.core.database.entity.CategoriesEntity
+import com.sembozdemir.mindvalley.core.database.entity.ChannelEntity
+import com.sembozdemir.mindvalley.core.database.entity.MediaObject
+import com.sembozdemir.mindvalley.core.database.entity.NewEpisodesEntity
 import com.sembozdemir.mindvalley.ui.channels.model.CategoriesUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.ChannelUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.MediaUIModel
@@ -10,57 +12,35 @@ import javax.inject.Inject
 
 class UIModelMapper @Inject constructor() {
 
-    fun mapNewEpisodes(response: NewEpisodesResponse): NewEpisodesUIModel {
-        val mediaItems: List<MediaItem> = response.data?.media?.mapNotNull { it }.orEmpty()
-        return NewEpisodesUIModel(mapMedia(mediaItems))
+    fun mapNewEpisodes(entity: NewEpisodesEntity): NewEpisodesUIModel {
+        return NewEpisodesUIModel(mapMedia(entity.mediaObjects))
     }
 
-    fun mapChannels(response: ChannelsResponse): List<ChannelUIModel> {
-        val channelItems = response.data?.channels?.mapNotNull { it }.orEmpty()
-        return channelItems.map { channel ->
-            val mediaItems = if (channel.series.isNullOrEmpty()) {
-                channel.latestMedia?.mapNotNull { it }.orEmpty()
-            } else {
-                channel.series.mapNotNull { it }
-            }
+    fun mapChannels(channelEntities: List<ChannelEntity>): List<ChannelUIModel> {
+        return channelEntities.map { channel ->
             ChannelUIModel(
-                mediaUIModels = mapMedia(mediaItems),
-                iconImageUrl = mapIconImageUrl(channel.iconAsset),
-                title = channel.title.orEmpty(),
-                count = channel.mediaCount.orZero(),
-                isSeries = !channel.series.isNullOrEmpty()
+                mediaUIModels = mapMedia(channel.mediaObjects),
+                iconImageUrl = channel.iconImageUrl,
+                title = channel.title,
+                count = channel.count,
+                isSeries = channel.isSeries
             )
         }
     }
 
-    private fun mapMedia(mediaItems: List<MediaItem>): List<MediaUIModel> {
-        return mediaItems.map {
+    private fun mapMedia(mediaObjects: List<MediaObject>): List<MediaUIModel> {
+        return mediaObjects.map {
             MediaUIModel(
-                imageUrl = it.coverAsset?.url.orEmpty(),
-                title = it.title.orEmpty(),
-                subtitle = it.channel?.title.orEmpty()
+                imageUrl = it.imageUrl,
+                title = it.mediaTitle,
+                subtitle = it.subtitle
             )
         }
     }
 
-    private fun mapIconImageUrl(iconAsset: Asset?): String {
-        if (iconAsset == null) return ""
-
-        if (!iconAsset.thumbnailUrl.isNullOrEmpty()) {
-            return iconAsset.thumbnailUrl
-        }
-
-        if (!iconAsset.url.isNullOrEmpty()) {
-            return iconAsset.url
-        }
-
-        return ""
-    }
-
-    fun mapCategories(response: CategoriesResponse): CategoriesUIModel {
-        val categoryItems = response.data?.categories?.mapNotNull { it }.orEmpty()
+    fun mapCategories(categoriesEntity: CategoriesEntity): CategoriesUIModel {
         return CategoriesUIModel(
-            categories = categoryItems.map { it.name.orEmpty() }
+            categories = categoriesEntity.categories
         )
     }
 

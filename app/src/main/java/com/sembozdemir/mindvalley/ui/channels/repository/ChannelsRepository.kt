@@ -1,11 +1,11 @@
 package com.sembozdemir.mindvalley.ui.channels.repository
 
-import com.sembozdemir.mindvalley.ui.channels.model.CategoriesUIModel
-import com.sembozdemir.mindvalley.ui.channels.model.ChannelUIModel
-import com.sembozdemir.mindvalley.ui.channels.model.NewEpisodesUIModel
+import androidx.lifecycle.LiveData
+import com.sembozdemir.mindvalley.ui.channels.model.DisplayableItem
 
 interface ChannelsRepository {
-    suspend fun getNewEpisodes(): NewEpisodesUIModel
-    suspend fun getChannels(): List<ChannelUIModel>
-    suspend fun getCategories(): CategoriesUIModel
+    fun getItems(): LiveData<List<DisplayableItem>>
+    suspend fun fetchNewEpisodes()
+    suspend fun fetchChannels()
+    suspend fun fetchCategories()
 }
