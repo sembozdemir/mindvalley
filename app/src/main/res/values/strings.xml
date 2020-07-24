@@ -4,4 +4,5 @@
     <!-- todo: use plurals -->
     <string name="channel_subtitle_episodes">%1$d episodes</string>
     <string name="channel_subtitle_series">%1$d series</string>
+    <string name="categories_title">Browse by categories</string>
 </resources>

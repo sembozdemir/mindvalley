@@ -28,6 +28,8 @@ class ChannelsViewModel @ViewModelInject constructor(
                 displayableItems.add(newEpisodes)
                 val channelUIModels = channelsRepository.getChannels()
                 displayableItems.addAll(channelUIModels)
+                val categoriesUIModel = channelsRepository.getCategories()
+                displayableItems.add(categoriesUIModel)
                 withContext(Dispatchers.Main) {
                     _displayableItems.postValue(displayableItems)
                 }

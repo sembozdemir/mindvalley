@@ -1,10 +1,8 @@
 package com.sembozdemir.mindvalley.ui.channels.mapper
 
 import com.sembozdemir.mindvalley.core.extensions.orZero
-import com.sembozdemir.mindvalley.core.network.model.Asset
-import com.sembozdemir.mindvalley.core.network.model.ChannelsResponse
-import com.sembozdemir.mindvalley.core.network.model.MediaItem
-import com.sembozdemir.mindvalley.core.network.model.NewEpisodesResponse
+import com.sembozdemir.mindvalley.core.network.model.*
+import com.sembozdemir.mindvalley.ui.channels.model.CategoriesUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.ChannelUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.MediaUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.NewEpisodesUIModel
@@ -57,6 +55,13 @@ class UIModelMapper @Inject constructor() {
         }
 
         return ""
+    }
+
+    fun mapCategories(response: CategoriesResponse): CategoriesUIModel {
+        val categoryItems = response.data?.categories?.mapNotNull { it }.orEmpty()
+        return CategoriesUIModel(
+            categories = categoryItems.map { it.name.orEmpty() }
+        )
     }
 
 }

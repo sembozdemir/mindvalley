@@ -1,8 +1,8 @@
 package com.sembozdemir.mindvalley.ui.channels.repository
 
 import com.sembozdemir.mindvalley.core.network.MindvalleyApi
-import com.sembozdemir.mindvalley.core.network.model.CategoriesResponse
 import com.sembozdemir.mindvalley.ui.channels.mapper.UIModelMapper
+import com.sembozdemir.mindvalley.ui.channels.model.CategoriesUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.ChannelUIModel
 import com.sembozdemir.mindvalley.ui.channels.model.NewEpisodesUIModel
 import javax.inject.Inject
@@ -22,7 +22,8 @@ class ChannelsRepositoryImpl @Inject constructor(
         return mapper.mapChannels(response)
     }
 
-    override suspend fun getCategories(): CategoriesResponse {
-        return mindvalleyApi.getCategories()
+    override suspend fun getCategories(): CategoriesUIModel {
+        val response = mindvalleyApi.getCategories()
+        return mapper.mapCategories(response)
     }
 }

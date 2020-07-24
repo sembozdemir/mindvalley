@@ -16,11 +16,9 @@ import com.sembozdemir.mindvalley.core.glide.Transformations
 import com.sembozdemir.mindvalley.core.recyclerview.HorizontalSpacingItemDecoration
 import com.sembozdemir.mindvalley.core.recyclerview.VerticalDividerItemDecoration
 import com.sembozdemir.mindvalley.databinding.*
-import com.sembozdemir.mindvalley.ui.channels.model.ChannelUIModel
-import com.sembozdemir.mindvalley.ui.channels.model.DisplayableItem
-import com.sembozdemir.mindvalley.ui.channels.model.MediaUIModel
-import com.sembozdemir.mindvalley.ui.channels.model.NewEpisodesUIModel
+import com.sembozdemir.mindvalley.ui.channels.model.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.item_category_view.view.*
 
 @AndroidEntryPoint
 class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel>() {
@@ -28,7 +26,8 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
     private val listAdapter: ListDelegationAdapter<List<DisplayableItem>> by lazy {
         ListDelegationAdapter<List<DisplayableItem>>(
             createNewEpisodesAdapterDelegate(),
-            createChannelsAdapterDelegate()
+            createChannelsAdapterDelegate(),
+            createCategoriesAdapterDelegate()
         )
     }
 
@@ -151,6 +150,25 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
                 binding.textViewTitle.setTextIfExists(item.title)
                 binding.textViewSubtitle.setTextIfExists(item.subtitle)
                 binding.imageViewMedia.setImageUrl(item.imageUrl, Transformations.rounded())
+            }
+        }
+
+    private fun createCategoriesAdapterDelegate() =
+        adapterDelegateViewBinding<CategoriesUIModel, DisplayableItem, ItemCategoriesBinding>(
+            { layoutInflater, parent ->
+                ItemCategoriesBinding.inflate(layoutInflater, parent, false)
+            }
+        ) {
+            bind {
+                for (i in 0 until item.categories.size - 1 step 2) {
+                    val categoryView = layoutInflater.inflate(
+                        R.layout.item_category_view,
+                        binding.linearLayout, false
+                    )
+                    categoryView.buttonCategoryStart.text = item.categories[i]
+                    categoryView.buttonCategoryEnd.text = item.categories[i + 1]
+                    binding.linearLayout.addView(categoryView)
+                }
             }
         }
 }
