@@ -9,9 +9,9 @@ import com.sembozdemir.mindvalley.core.livedata.SingleLiveEvent
 import com.sembozdemir.mindvalley.ui.channels.model.DisplayableItem
 import com.sembozdemir.mindvalley.ui.channels.repository.ChannelsRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class ChannelsViewModel @ViewModelInject constructor(
     private val channelsRepository: ChannelsRepository
@@ -27,24 +27,25 @@ class ChannelsViewModel @ViewModelInject constructor(
     val errorEvent: LiveData<Unit>
         get() = _errorEvent
 
-    fun fetchData() {
-        _showLoading.postValue(true)
-        viewModelScope.launch(Dispatchers.IO) {
+    fun fetchData(showLoading: Boolean = true) {
+        if (showLoading) {
+            _showLoading.postValue(true)
+        }
+
+        viewModelScope.launch {
             try {
-                // todo: send those requests parallel with Kotlin Flow or RxJava
-                channelsRepository.fetchNewEpisodes()
-                channelsRepository.fetchChannels()
-                channelsRepository.fetchCategories()
-                withContext(Dispatchers.Main) {
-                    _showLoading.postValue(false)
-                }
+                listOf(
+                    viewModelScope.async(Dispatchers.IO) { channelsRepository.fetchNewEpisodes() },
+                    viewModelScope.async(Dispatchers.IO) { channelsRepository.fetchChannels() },
+                    viewModelScope.async(Dispatchers.IO) { channelsRepository.fetchCategories() }
+                ).awaitAll()
+
+                _showLoading.postValue(false)
             } catch (e: Exception) {
-                Timber.e(e)
-                withContext(Dispatchers.Main) {
-                    _showLoading.postValue(false)
-                    _errorEvent.call()
-                }
+                _showLoading.postValue(false)
+                _errorEvent.call()
             }
+
         }
     }
 

@@ -84,7 +84,7 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
 
     private fun setupSwipeRefreshLayout() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.fetchData()
+            viewModel.fetchData(showLoading = false)
         }
     }
 
@@ -101,7 +101,7 @@ class ChannelsFragment : BaseFragment<FragmentChannelsBinding, ChannelsViewModel
 
         viewModel.displayableItems.observe(viewLifecycleOwner, Observer {
             listAdapter.items = it
-            listAdapter.notifyDataSetChanged() // todo: use DiffUtils
+            listAdapter.notifyDataSetChanged()
             binding.swipeRefreshLayout.isRefreshing = false
         })
     }
