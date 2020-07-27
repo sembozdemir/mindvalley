@@ -53,7 +53,10 @@ class AdapterDelegateFactoryImpl @Inject constructor() : AdapterDelegateFactory 
                 val subtitle = if (item.isSeries) {
                     getString(R.string.channel_subtitle_series, item.count)
                 } else {
-                    getString(R.string.channel_subtitle_episodes, item.count)
+                    context.resources.getQuantityString(
+                        R.plurals.channel_subtitle_episodes,
+                        item.count, item.count
+                    )
                 }
                 binding.textViewChannelSubtitle.text = subtitle
 

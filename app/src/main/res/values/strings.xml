@@ -1,10 +1,12 @@
 <resources>
     <string name="channels_title">Channels</string>
     <string name="new_episodes_title">New Episodes</string>
-    <!-- todo: use plurals -->
-    <string name="channel_subtitle_episodes">%1$d episodes</string>
-    <string name="channel_subtitle_series">%1$d series</string>
     <string name="categories_title">Browse by categories</string>
     <string name="general_error">Oops! Something went wrong. Please, try again later.</string>
     <string name="retry">Retry</string>
+    <string name="channel_subtitle_series">%1$d series</string>
+    <plurals name="channel_subtitle_episodes">
+        <item quantity="one">%1$d episode</item>
+        <item quantity="other">%1$d episodes</item>
+    </plurals>
 </resources>
