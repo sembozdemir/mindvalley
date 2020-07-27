@@ -5,21 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.sembozdemir.mindvalley.core.base.BaseViewModel
+import com.sembozdemir.mindvalley.core.coroutines.DispatcherProvider
 import com.sembozdemir.mindvalley.core.livedata.SingleLiveEvent
 import com.sembozdemir.mindvalley.ui.channels.model.DisplayableItem
 import com.sembozdemir.mindvalley.ui.channels.repository.ChannelsRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class ChannelsViewModel @ViewModelInject constructor(
+    private val dispatchers: DispatcherProvider,
     private val channelsRepository: ChannelsRepository
 ) : BaseViewModel() {
 
     val displayableItems: LiveData<List<DisplayableItem>> = channelsRepository.getItems()
 
-    private val _showLoading: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val _showLoading: MutableLiveData<Boolean> = MutableLiveData()
     val showLoading: LiveData<Boolean>
         get() = _showLoading
 
@@ -28,16 +29,16 @@ class ChannelsViewModel @ViewModelInject constructor(
         get() = _errorEvent
 
     fun fetchData(showLoading: Boolean = true) {
-        if (showLoading) {
-            _showLoading.postValue(true)
-        }
+        viewModelScope.launch(dispatchers.main()) {
+            if (showLoading) {
+                _showLoading.postValue(true)
+            }
 
-        viewModelScope.launch {
             try {
                 listOf(
-                    viewModelScope.async(Dispatchers.IO) { channelsRepository.fetchNewEpisodes() },
-                    viewModelScope.async(Dispatchers.IO) { channelsRepository.fetchChannels() },
-                    viewModelScope.async(Dispatchers.IO) { channelsRepository.fetchCategories() }
+                    viewModelScope.async(dispatchers.io()) { channelsRepository.fetchNewEpisodes() },
+                    viewModelScope.async(dispatchers.io()) { channelsRepository.fetchChannels() },
+                    viewModelScope.async(dispatchers.io()) { channelsRepository.fetchCategories() }
                 ).awaitAll()
 
                 _showLoading.postValue(false)
