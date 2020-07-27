@@ -1,4 +1,4 @@
-package com.sembozdemir.mindvalley.util
+package com.sembozdemir.mindvalley.ui.channels
 
 import com.sembozdemir.mindvalley.core.coroutines.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher

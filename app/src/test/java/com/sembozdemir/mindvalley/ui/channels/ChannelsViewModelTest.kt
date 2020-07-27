@@ -1,4 +1,4 @@
-package com.sembozdemir.mindvalley
+package com.sembozdemir.mindvalley.ui.channels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
@@ -6,9 +6,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import com.sembozdemir.mindvalley.core.coroutines.DispatcherProvider
-import com.sembozdemir.mindvalley.ui.channels.ChannelsViewModel
 import com.sembozdemir.mindvalley.ui.channels.repository.ChannelsRepository
-import com.sembozdemir.mindvalley.util.CoroutineTestRule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
