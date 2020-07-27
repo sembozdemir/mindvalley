@@ -135,3 +135,13 @@
 
 ##### end of Moshi #####
 ##### end of Network related #####
+
+# network model classes
+-keepnames @kotlin.Metadata class com.sembozdemir.mindvalley.core.network.model.**
+-keep class com.sembozdemir.mindvalley.core.network.model.** { *; }
+-keepclassmembers class com.sembozdemir.mindvalley.core.network.model.** { *; }
+
+# database entity classes
+-keepnames @kotlin.Metadata class com.sembozdemir.mindvalley.core.database.entity.**
+-keep class com.sembozdemir.mindvalley.core.database.entity.** { *; }
+-keepclassmembers class com.sembozdemir.mindvalley.core.database.entity.** { *; }
